@@ -47,6 +47,9 @@ jobs:
             databricks workspace mkdirs "$TARGET_DIR"
 
       - name: Copy Notebooks to Databricks Workspace
+        env:
+            DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_DEV }}
+            DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_DEV }}
         run: |
           NOTEBOOKS_DIR="./Dir"  # Adjust the folder path in your repo
           TARGET_DIR="/Workspace/Deployed"
