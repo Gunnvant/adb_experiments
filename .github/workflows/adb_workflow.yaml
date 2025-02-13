@@ -32,7 +32,7 @@ jobs:
             # Check if the directory exists before deleting
             if databricks workspace ls "$TARGET_DIR"; then
                 echo "Deleting existing notebooks in $TARGET_DIR"
-                databricks workspace rm -r "$TARGET_DIR"
+                databricks delete "$TARGET_DIR"
             else
                 echo "Target directory does not exist, skipping deletion."
             fi
