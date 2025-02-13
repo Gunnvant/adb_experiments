@@ -23,10 +23,10 @@ jobs:
           databricks --version || echo "Databricks CLI not working!"
 
       - name: Delete Existing Notebooks from Databricks
-          env:
-            DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_DEV }}
-            DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_DEV }}
-          run: |
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_DEV }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_DEV }}
+        run: |
             TARGET_DIR="/Workspace/Deployed/"  # Adjust Databricks folder path
             
             # Check if the directory exists before deleting
@@ -38,10 +38,10 @@ jobs:
             fi
 
       - name: Recreate Target Directory
-          env:
-              DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_DEV }}
-              DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_DEV }}
-          run: |
+        env:
+            DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_DEV }}
+            DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_DEV }}
+        run: |
             TARGET_DIR="/Workspace/Deployed/"
             echo "Recreating target directory: $TARGET_DIR"
             databricks workspace mkdirs "$TARGET_DIR"
