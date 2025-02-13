@@ -51,7 +51,7 @@ jobs:
             DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_DEV }}
             DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_DEV }}
         run: |
-          NOTEBOOKS_DIR="./"  # Adjust the folder path in your repo
+          NOTEBOOKS_DIR="."  # Adjust the folder path in your repo
           TARGET_DIR="/Workspace/Deployed"
 
           for file in $NOTEBOOKS_DIR/*.py; do
