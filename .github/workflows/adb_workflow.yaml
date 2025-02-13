@@ -55,8 +55,8 @@ jobs:
           TARGET_DIR="/Workspace/Deployed"
           for file in $NOTEBOOKS_DIR/*.py; do
               filename=$(basename -- "$file")
-              echo "Uploading $filename to $TARGET_DIR"
-              databricks workspace import  --format AUTO "$file" "$TARGET_DIR/" 
+              echo "Uploading $filename, $file to $TARGET_DIR"
+              databricks workspace import  --format AUTO "$file" "$TARGET_DIR/$filename" 
           done
 
       - name: Cleanup Authentication
