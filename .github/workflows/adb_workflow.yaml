@@ -22,29 +22,34 @@ jobs:
           which databricks || echo "Databricks CLI not found!"
           databricks --version || echo "Databricks CLI not working!"
 
-      - name: Authenticate Databricks CLI
-        run: |
-          databricks configure --host ${{ secrets.DATABRICKS_HOST_DEV }} --token ${{ secrets.DATABRICKS_TOKEN_DEV }}
-
       - name: Delete Existing Notebooks from Databricks
-        run: |
-          TARGET_DIR="/Workspace/Deployed/"  # Adjust Databricks folder path
-          
-          # Check if the directory exists before deleting
-          if databricks workspace ls "$TARGET_DIR"; then
-              echo "Deleting existing notebooks in $TARGET_DIR"
-              databricks workspace rm -r "$TARGET_DIR"
-          else
-              echo "Target directory does not exist, skipping deletion."
-          fi
+          env:
+            DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_DEV }}
+            DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_DEV }}
+          run: |
+            TARGET_DIR="/Workspace/Deployed/"  # Adjust Databricks folder path
+            
+            # Check if the directory exists before deleting
+            if databricks workspace ls "$TARGET_DIR"; then
+                echo "Deleting existing notebooks in $TARGET_DIR"
+                databricks workspace rm -r "$TARGET_DIR"
+            else
+                echo "Target directory does not exist, skipping deletion."
+            fi
 
       - name: Recreate Target Directory
-        run: |
-          TARGET_DIR="/Workspace/Deployed/"
-          echo "Recreating target directory: $TARGET_DIR"
-          databricks workspace mkdirs "$TARGET_DIR"
+          env:
+              DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_DEV }}
+              DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_DEV }}
+          run: |
+            TARGET_DIR="/Workspace/Deployed/"
+            echo "Recreating target directory: $TARGET_DIR"
+            databricks workspace mkdirs "$TARGET_DIR"
 
       - name: Copy Notebooks to Databricks Workspace
+        env:
+            DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_DEV }}
+            DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_DEV }}
         run: |
           NOTEBOOKS_DIR="./"  # Adjust the folder path in your repo
           TARGET_DIR="/Workspace/Deployed"
