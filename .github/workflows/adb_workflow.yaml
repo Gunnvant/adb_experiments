@@ -1,7 +1,9 @@
 name: Deploy Notebooks to Databricks
 
 on:
-  workflow_dispatch: # Adjust branch as needed
+  push:
+    branches:
+      - dev # Adjust branch as needed
 
 jobs:
   deploy:
